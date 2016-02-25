@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface RootCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIButton *selectedBtn;
 
 @end

@@ -8,7 +8,7 @@
 
 #import "RootViewController.h"
 #import "RootCell.h"
-@interface RootViewController ()
+@interface RootViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     //一般创建一个全局的tableview  因为下面有好多方法需要来调用这个tableview
     
@@ -128,6 +128,7 @@
     
     [_tableView reloadData];
 }
+
 -(void)editTableView{
     
     _tableView.editing = !_tableView.editing;
@@ -174,28 +175,36 @@
     if (rootCell == nil) {
         rootCell = [[[NSBundle mainBundle] loadNibNamed:@"RootCell" owner:self options:nil] firstObject];
     }
-   // rootCell.selectionStyle = UITableViewCellSelectionStyleNone;//这个设置使点击cell的时候没有点击效果了
+    
+    //rootCell.selectionStyle = UITableViewCellSelectionStyleNone;//这个设置使点击cell的时候没有点击效果了
 
     return rootCell;
 }
 
 //设置每个cell的高度
-
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    return 100;
+    return 70;
 }
 
 //点击某个cell的方法 点击这一行想做什么事儿的代码 都写在这个方法里
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     NSLog(@"您点击了第%d行",indexPath.row);
-    
-    //让cell点击的背景色 变回来
-    
+
     
     if (tableView.editing == YES) {
         
+    }else {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        //跳转
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    if (tableView.editing == YES) {
         
     }
 }
