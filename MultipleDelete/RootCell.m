@@ -17,11 +17,6 @@
     
 }
 
-//-(void)setEditing:(BOOL)editing animated:(BOOL)animated
-//{
-//    _selectedBtn.backgroundColor = [UIColor blueColor];
-//}
-
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

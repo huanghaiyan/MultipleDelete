@@ -119,13 +119,14 @@
     for (NSInteger b = array.count - 1; b>=0; b--) {
         
         //根据b在数组里面的位置 定位到到底是哪一行
-        
         NSIndexPath *indexPath = array[b];
-        
+        NSLog(@"%@",[indexPath description]);
+//        NSLog(@"%lu",(unsigned long)_dataArray.count);
+
         [_dataArray removeObjectAtIndex:indexPath.row];
     }
-    
-    
+    NSLog(@"%lu",(unsigned long)_dataArray.count);
+
     [_tableView reloadData];
 }
 
