@@ -112,22 +112,38 @@
     NSMutableArray *array = [[NSMutableArray alloc]initWithArray:[_tableView indexPathsForSelectedRows]];
     
     //给这个数组按照倒序排序
-    [array sortedArrayUsingSelector:@selector(compare:)];
+    array = [[array reverseObjectEnumerator] allObjects];
+    //    array = [array sortedArrayUsingSelector:@selector(compare:)];
+    
+    // 因为_dataArray里面的数据要在底下循环的时候改变，所以用一个临时变量保存一下原始的数据（等于说拷贝了一份，其实这个地方用深拷贝挺好，只是不习惯）
+    NSMutableArray *arr = [NSMutableArray arrayWithArray:_dataArray];
     
     //遍历这个数组
-    
-    for (NSInteger b = array.count - 1; b>=0; b--) {
+    for (NSInteger b = array.count - 1;b>=0; b--) {
         
         //根据b在数组里面的位置 定位到到底是哪一行
         NSIndexPath *indexPath = array[b];
         NSLog(@"%@",[indexPath description]);
-//        NSLog(@"%lu",(unsigned long)_dataArray.count);
-
-        [_dataArray removeObjectAtIndex:indexPath.row];
+        //        NSLog(@"%lu",(unsigned long)_dataArray.count);
+        
+        // 先找出来要删除的元素
+        id obj = arr[indexPath.row];
+        
+        // 删除
+        [_dataArray removeObject:obj];
+        
+        /**
+         *  原代码错误原因分析：
+         *  1>选择了第0行和第19行
+         *  2>删除第0行的时候没问题，_dataArray = @[@"第0行"....@"第19行"];删除第0行
+         *  3>删除第19行的时候就会出现越界，上面删除第0行以后,_dataArray = @[@"第1行"....@"第19行"];总共19个元素,也就是_dataArray[0]...._dataArray[18],这时候删除的时候是删除_dataArray[19]，就会越界
+         */
     }
+    
     NSLog(@"%lu",(unsigned long)_dataArray.count);
-
+    
     [_tableView reloadData];
+    
 }
 
 -(void)editTableView{
@@ -237,7 +253,7 @@
     return UITableViewCellEditingStyleDelete | UITableViewCellEditingStyleInsert;
 }
 
-//第三步 开始对这个cell进行编辑
+//第三步 开始对这个cell进行编辑，这个方法没走
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     //先判断当前的cell的编辑类型是删除还是增加

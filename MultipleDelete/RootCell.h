@@ -10,5 +10,6 @@
 
 @interface RootCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIButton *selectedBtn;
+@property (weak, nonatomic) IBOutlet UILabel *titleLab;
 
 @end
