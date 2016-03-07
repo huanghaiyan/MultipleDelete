@@ -27,7 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.title = @"tableView";
+    self.title = @"多选删除";
     
     //先创建数据源
     [self creatDataSource];
@@ -35,7 +35,7 @@
     //再创建tableview
     [self creatTableView];
     
-    
+    //创建编辑和删除按钮
     [self creatNavigationBarItem];
 
 }
@@ -139,8 +139,6 @@
          *  3>删除第19行的时候就会出现越界，上面删除第0行以后,_dataArray = @[@"第1行"....@"第19行"];总共19个元素,也就是_dataArray[0]...._dataArray[18],这时候删除的时候是删除_dataArray[19]，就会越界
          */
     }
-    
-    NSLog(@"%lu",(unsigned long)_dataArray.count);
     
     [_tableView reloadData];
     
